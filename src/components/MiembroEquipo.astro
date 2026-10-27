@@ -1,0 +1,26 @@
+﻿---
+import { Image } from 'astro:assets';
+import type { Miembro } from '../data/equipo';
+
+interface Props {
+  miembro: Miembro;
+}
+const { miembro } = Astro.props;
+---
+
+<article class="revelar flex h-full flex-col items-center rounded-2xl border border-white/10 bg-white/[0.03] p-6 text-center">
+  <Image
+    src={miembro.foto}
+    alt={`Retrato de ${miembro.nombre}, ${miembro.cargo}`}
+    width={160}
+    height={160}
+    densities={[1, 2]}
+    loading="lazy"
+    class="h-40 w-40 rounded-full object-cover ring-4 ring-marca-rojo/70"
+  />
+  <h3 class="mt-5 text-xl font-bold uppercase tracking-wider">{miembro.nombre}</h3>
+  <p class="mt-1 text-sm font-medium uppercase tracking-[0.12em] text-marca-rojo-claro">{miembro.cargo}</p>
+  {miembro.empresa && <p class="mt-1 text-sm text-white/70">{miembro.empresa}</p>}
+  <p class="mt-4 text-sm leading-relaxed text-white/80">{miembro.descripcion}</p>
+</article>
+

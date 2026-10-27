@@ -1,0 +1,45 @@
+﻿---
+const tarjetas = [
+  {
+    titulo: 'Nuestra misión',
+    texto:
+      'Impulsar marcas y artistas mediante creatividad y ejecución estratégica, transformando ideas en experiencias reales y de alto impacto, bajo principios de libertad, profesionalismo y pasión.',
+  },
+  {
+    titulo: 'Nuestra visión',
+    texto:
+      'Ser líderes en el entretenimiento creativo, reconocida por descubrir y posicionar nuevos talentos y marcas, así como crear nuevas colaboraciones con artistas y empresas consolidadas. Generar alianzas estratégicas que lleven nuestras producciones y experiencias a escenarios donde brillen con fuerza propia.',
+  },
+  {
+    titulo: 'Nuestra propuesta de valor',
+    texto:
+      'Ofrecemos soluciones integrales que acompañan cada etapa del proyecto, desde la idea hasta la ejecución final. Integramos producción, creatividad y operación de calidad en un solo equipo, brindando a nuestros clientes un proceso más eficiente y personalizado, sin necesidad de coordinar múltiples proveedores.',
+  },
+];
+---
+
+<section id="nosotros" class="fondo-escenario px-4 py-20 sm:px-6 sm:py-28">
+  <div class="mx-auto max-w-6xl">
+    <div class="revelar mx-auto max-w-3xl text-center">
+      <h2 class="text-3xl font-extrabold uppercase tracking-[0.15em] sm:text-4xl sm:tracking-escenario">
+        ¿Qué es <span class="text-marca-rojo">Redonix</span>?
+      </h2>
+      <p class="mt-6 text-lg leading-relaxed text-white/90">
+        Somos una empresa creativa de entretenimiento que integra producción, diseño y estrategia para desarrollar
+        proyectos memorables. De tu idea al escenario, <strong class="font-bold text-white">somos tu mejor aliado creativo</strong>.
+      </p>
+    </div>
+
+    <div class="mt-14 grid gap-6 lg:grid-cols-3">
+      {
+        tarjetas.map((t) => (
+          <article class="revelar rounded-2xl border border-white/15 bg-black/50 p-8 backdrop-blur-sm">
+            <h3 class="text-lg font-bold uppercase tracking-[0.15em] text-marca-rojo-claro">{t.titulo}</h3>
+            <p class="mt-4 leading-relaxed text-white/85">{t.texto}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+

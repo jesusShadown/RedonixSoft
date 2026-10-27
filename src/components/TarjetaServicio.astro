@@ -1,0 +1,45 @@
+﻿---
+import { Image } from 'astro:assets';
+import type { Servicio } from '../data/servicios';
+
+interface Props {
+  servicio: Servicio;
+}
+const { servicio } = Astro.props;
+
+const imagenes = import.meta.glob<{ default: ImageMetadata }>('../assets/servicios/*.{jpg,jpeg,png,webp,avif}', {
+  eager: true,
+});
+const ruta = Object.keys(imagenes).find((r) => servicio.imagen && /([^/]+)\.[a-z]+$/.exec(r)?.[1] === servicio.imagen);
+const imagen = ruta ? imagenes[ruta].default : undefined;
+---
+
+<article class="revelar flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]">
+  <div class="fondo-escenario aspect-video w-full">
+    {
+      imagen && (
+        <Image
+          src={imagen}
+          alt={`Servicio de ${servicio.nombre}`}
+          width={640}
+          height={360}
+          widths={[320, 480, 640, 960]}
+          sizes="(min-width: 1024px) 352px, (min-width: 640px) 50vw, 100vw"
+          loading="lazy"
+          class="h-full w-full object-cover"
+        />
+      )
+    }
+  </div>
+  <div class="flex flex-1 flex-col p-6">
+    <h3 class="text-lg font-bold uppercase leading-snug tracking-wider">{servicio.nombre}</h3>
+    {servicio.detalle && <p class="mt-2 text-sm text-white/80">{servicio.detalle}</p>}
+    <div class="mt-auto pt-4">
+      <p class="text-xs font-medium uppercase tracking-[0.2em] text-marca-rojo-claro">
+        {servicio.responsables.length > 1 ? 'Responsables' : 'Responsable'}
+      </p>
+      <p class="mt-1 text-sm text-white/80">{servicio.responsables.join(' · ')}</p>
+    </div>
+  </div>
+</article>
+

@@ -1,0 +1,34 @@
+﻿---
+import { Image } from 'astro:assets';
+import logo from '../assets/logos/redonix.png';
+import Icono from './Icono.astro';
+import { redes } from '../data/contacto';
+
+const anio = new Date().getFullYear();
+---
+
+<footer class="border-t border-white/10 bg-black px-4 py-12 sm:px-6">
+  <div class="mx-auto flex max-w-6xl flex-col items-center gap-6 text-center">
+    <Image src={logo} alt="Logotipo de Redonix" width={160} densities={[1, 2]} loading="lazy" class="h-auto w-36" />
+
+    <ul class="flex items-center gap-3">
+      {
+        redes.map((red) => (
+          <li>
+            <a
+              href={red.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${red.nombre}: ${red.usuario}`}
+              class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 transition-colors hover:border-marca-rojo hover:bg-marca-rojo"
+            >
+              <Icono nombre={red.icono} />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="text-sm tracking-wider text-white/70">© {anio} Redonix Entertainment</p>
+  </div>
+</footer>

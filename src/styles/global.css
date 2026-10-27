@@ -1,0 +1,90 @@
+﻿@import "tailwindcss";
+
+
+@font-face {
+  font-family: "Outfit";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../../node_modules/@fontsource/outfit/files/outfit-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Outfit";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../../node_modules/@fontsource/outfit/files/outfit-latin-500-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Outfit";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../../node_modules/@fontsource/outfit/files/outfit-latin-700-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Outfit";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("../../node_modules/@fontsource/outfit/files/outfit-latin-800-normal.woff2") format("woff2");
+}
+
+@theme {
+  --color-marca-negro: #000000;
+  --color-marca-rojo: #e31b23;
+  --color-marca-rojo-claro: #ff5a60; /* rojo para texto pequeño: cumple contraste AA sobre negro */
+  --color-marca-vino: #5a0a0e;
+
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+
+  --tracking-escenario: 0.2em;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    @apply bg-marca-negro font-sans text-white antialiased;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@utility fondo-escenario {
+  background-image: linear-gradient(135deg, #000000 0%, #5a0a0e 60%, #e31b23 130%);
+}
+
+/* Animación de entrada al hacer scroll: solo CSS, sin JS. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .revelar {
+      animation: revelar linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 40%;
+    }
+  }
+}
+
+@keyframes revelar {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+

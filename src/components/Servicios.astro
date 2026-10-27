@@ -1,0 +1,15 @@
+﻿---
+import TarjetaServicio from './TarjetaServicio.astro';
+import { servicios } from '../data/servicios';
+---
+
+<section id="servicios" class="fondo-escenario px-4 py-20 sm:px-6 sm:py-28">
+  <div class="mx-auto max-w-6xl">
+    <h2 class="revelar text-center text-3xl font-extrabold uppercase tracking-[0.15em] sm:text-4xl sm:tracking-escenario">
+      Nuestros <span class="text-marca-rojo">servicios</span>
+    </h2>
+    <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {servicios.map((servicio) => <TarjetaServicio servicio={servicio} />)}
+    </div>
+  </div>
+</section>

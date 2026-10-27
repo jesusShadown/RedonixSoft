@@ -1,0 +1,151 @@
+﻿---
+import Icono from './Icono.astro';
+import { servicios } from '../data/servicios';
+import { contacto, redes, WHATSAPP_NUMERO } from '../data/contacto';
+
+const campo =
+  'mt-2 block min-h-12 w-full rounded-lg border border-white/30 bg-black/60 px-4 py-3 text-base text-white placeholder:text-white/40 focus-visible:border-marca-rojo focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marca-rojo aria-[invalid=true]:border-marca-rojo [color-scheme:dark]';
+const etiqueta = 'block text-sm font-medium uppercase tracking-[0.12em]';
+const enlaceContacto = 'flex min-h-12 items-center gap-4 rounded-lg py-2 transition-colors hover:text-marca-rojo';
+---
+
+<section id="contacto" class="fondo-escenario px-4 py-20 sm:px-6 sm:py-28">
+  <div class="mx-auto max-w-6xl">
+    <h2 class="revelar text-center text-3xl font-extrabold uppercase tracking-[0.15em] sm:text-4xl sm:tracking-escenario">
+      Cotiza tu <span class="text-marca-rojo-claro">proyecto</span>
+    </h2>
+    <p class="revelar mx-auto mt-4 max-w-2xl text-center text-white/85">
+      Cuéntanos tu idea y te respondemos directamente por WhatsApp.
+    </p>
+
+    <div class="mt-14 grid gap-10 lg:grid-cols-[3fr_2fr] lg:gap-14">
+      <form
+        id="form-whatsapp"
+        novalidate
+        data-numero={WHATSAPP_NUMERO}
+        class="revelar space-y-6 rounded-2xl border border-white/15 bg-black/50 p-6 backdrop-blur-sm sm:p-8"
+      >
+        <div>
+          <label for="nombre" class={etiqueta}>Nombre <span class="text-marca-rojo-claro" aria-hidden="true">*</span></label>
+          <input
+            id="nombre"
+            name="nombre"
+            type="text"
+            autocomplete="name"
+            required
+            aria-describedby="error-nombre"
+            class={campo}
+            placeholder="Tu nombre"
+          />
+          <p id="error-nombre" class="mt-1 hidden text-sm text-marca-rojo-claro" role="alert">Escribe tu nombre.</p>
+        </div>
+
+        <div>
+          <label for="servicio" class={etiqueta}>Servicio de interés</label>
+          <select id="servicio" name="servicio" class={campo}>
+            <option value="">Selecciona un servicio</option>
+            {servicios.map((s) => <option value={s.nombre}>{s.nombre}</option>)}
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="fecha" class={etiqueta}>Fecha aproximada del evento o proyecto <span class="normal-case tracking-normal text-white/60">(opcional)</span></label>
+          <input id="fecha" name="fecha" type="date" class={campo} />
+        </div>
+
+        <div>
+          <label for="mensaje" class={etiqueta}>Mensaje <span class="text-marca-rojo-claro" aria-hidden="true">*</span></label>
+          <textarea
+            id="mensaje"
+            name="mensaje"
+            rows="4"
+            required
+            aria-describedby="error-mensaje"
+            class={campo}
+            placeholder="Cuéntanos de tu proyecto"></textarea>
+          <p id="error-mensaje" class="mt-1 hidden text-sm text-marca-rojo-claro" role="alert">Escribe un mensaje.</p>
+        </div>
+
+        <button
+          type="submit"
+          class="inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-full bg-marca-rojo px-8 text-sm font-bold uppercase tracking-[0.15em] transition-colors hover:bg-white hover:text-marca-rojo-claro focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        >
+          <Icono nombre="whatsapp" class="h-5 w-5" />
+          Enviar por WhatsApp
+        </button>
+      </form>
+
+      <div class="revelar">
+        <h3 class="text-lg font-bold uppercase tracking-[0.15em] text-marca-rojo-claro">Datos de contacto</h3>
+        <ul class="mt-4 space-y-1">
+          <li>
+            <a href={`https://wa.me/${WHATSAPP_NUMERO}`} class={enlaceContacto}>
+              <Icono nombre="telefono" class="h-6 w-6 shrink-0 text-marca-rojo-claro" />
+              <span><span class="block text-xs uppercase tracking-[0.15em] text-white/60">Teléfono / WhatsApp</span>{contacto.telefono}</span>
+            </a>
+          </li>
+          <li>
+            <a href={`mailto:${contacto.email}`} class={enlaceContacto}>
+              <Icono nombre="email" class="h-6 w-6 shrink-0 text-marca-rojo-claro" />
+              <span><span class="block text-xs uppercase tracking-[0.15em] text-white/60">Email</span>{contacto.email}</span>
+            </a>
+          </li>
+          {
+            redes.map((red) => (
+              <li>
+                <a href={red.url} target="_blank" rel="noopener noreferrer" class={enlaceContacto}>
+                  <Icono nombre={red.icono} class="h-6 w-6 shrink-0 text-marca-rojo-claro" />
+                  <span><span class="block text-xs uppercase tracking-[0.15em] text-white/60">{red.nombre}</span>{red.usuario}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('form-whatsapp') as HTMLFormElement;
+  const nombre = form.elements.namedItem('nombre') as HTMLInputElement;
+  const servicio = form.elements.namedItem('servicio') as HTMLSelectElement;
+  const fecha = form.elements.namedItem('fecha') as HTMLInputElement;
+  const mensaje = form.elements.namedItem('mensaje') as HTMLTextAreaElement;
+
+  const marcar = (campo: HTMLInputElement | HTMLTextAreaElement, valido: boolean) => {
+    campo.setAttribute('aria-invalid', String(!valido));
+    document.getElementById(`error-${campo.name}`)?.classList.toggle('hidden', valido);
+    return valido;
+  };
+
+  [nombre, mensaje].forEach((c) =>
+    c.addEventListener('input', () => c.value.trim() && marcar(c, true)),
+  );
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const nombreOk = marcar(nombre, nombre.value.trim() !== '');
+    const mensajeOk = marcar(mensaje, mensaje.value.trim() !== '');
+    if (!nombreOk || !mensajeOk) {
+      (nombreOk ? mensaje : nombre).focus();
+      return;
+    }
+
+    const partes = [`Hola Redonix, soy ${nombre.value.trim()}.`];
+    if (servicio.value) partes.push(`Me interesa: ${servicio.value}.`);
+    if (fecha.value) partes.push(`Fecha: ${fecha.value.split('-').reverse().join('/')}.`);
+    partes.push(mensaje.value.trim());
+
+    const url = `https://wa.me/${form.dataset.numero}?text=${encodeURIComponent(partes.join(' '))}`;
+
+    if (/Android|iPhone|iPad|iPod|Mobi/i.test(navigator.userAgent)) {
+      window.location.href = url;
+    } else {
+      window.open(url, '_blank', 'noopener');
+    }
+  });
+</script>
+

@@ -1,0 +1,15 @@
+﻿---
+import MiembroEquipo from './MiembroEquipo.astro';
+import { equipo } from '../data/equipo';
+---
+
+<section id="equipo" class="bg-black px-4 py-20 sm:px-6 sm:py-28">
+  <div class="mx-auto max-w-6xl">
+    <h2 class="revelar text-center text-3xl font-extrabold uppercase tracking-[0.15em] sm:text-4xl sm:tracking-escenario">
+      ¡Conoce a nuestro <span class="text-marca-rojo">equipo</span>!
+    </h2>
+    <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {equipo.map((miembro) => <MiembroEquipo miembro={miembro} />)}
+    </div>
+  </div>
+</section>
